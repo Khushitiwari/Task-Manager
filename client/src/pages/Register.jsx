@@ -1,32 +1,33 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const FIELDS = [
-  { name: "email",    type: "email",    label: "Email",    placeholder: "you@example.com" },
-  { name: "password", type: "password", label: "Password", placeholder: "••••••••••"      },
+  { name: "name",     type: "text",     label: "Full Name", placeholder: "John Doe"        },
+  { name: "email",    type: "email",    label: "Email",     placeholder: "you@example.com" },
+  { name: "password", type: "password", label: "Password",  placeholder: "••••••••••"      },
 ];
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
-  const { login, loading } = useAuth();
+  const { register, loading } = useAuth();
 
-  const [form,    setForm]    = useState({ email: "", password: "" });
+  const [form,    setForm]    = useState({ name: "", email: "", password: "" });
   const [focused, setFocused] = useState(null);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (await login(form)) navigate("/dashboard");
+    if (await register(form)) navigate("/login");
   };
 
   return (
     <>
+      {/* Font import + custom keyframes only (no layout/color styles here) */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=DM+Mono:wght@300;400&display=swap');
 
-        .font-display     { font-family: 'Cormorant Garamond', serif; }
+        .font-display { font-family: 'Cormorant Garamond', serif; }
         .font-mono-custom { font-family: 'DM Mono', monospace; }
 
         @keyframes fadeUp {
@@ -42,16 +43,16 @@ export default function Login() {
           to   { transform: translateX(100%); }
         }
 
-        .animate-fade-up     { animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) both; }
-        .animate-drift       { animation: drift 11s ease-in-out infinite alternate; }
+        .animate-fade-up  { animation: fadeUp 0.65s cubic-bezier(0.22,1,0.36,1) both; }
+        .animate-drift    { animation: drift 11s ease-in-out infinite alternate; }
         .animate-drift-delay { animation: drift 11s ease-in-out infinite alternate; animation-delay: -4s; }
-
         .btn-shimmer::after {
           content: '';
           position: absolute;
           inset: 0;
           background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
           transform: translateX(-100%);
+          transition: none;
         }
         .btn-shimmer:hover::after { animation: shimmer 0.55s ease forwards; }
 
@@ -92,16 +93,16 @@ export default function Login() {
             </span>
           </div>
 
-          {/* Headline — login-specific copy */}
+          {/* Headline */}
           <div className="relative z-10">
             <h1 className="font-display mb-5 text-5xl font-light leading-tight tracking-tight text-stone-100">
-              Welcome<br />
-              <em className="not-italic text-yellow-500/90">back</em><br />
-              to Aurum.
+              Begin your<br />
+              <em className="not-italic text-yellow-500/90">journey</em><br />
+              with us.
             </h1>
             <p className="max-w-xs text-xs leading-relaxed tracking-wide text-stone-500">
-              Sign in to continue your curated experience.
-              Everything is right where you left it.
+              Create an account and unlock access to a carefully curated
+              experience built for those who value refinement.
             </p>
           </div>
 
@@ -119,12 +120,12 @@ export default function Login() {
             <div className="mb-10">
               <div className="mb-3 flex items-center gap-3">
                 <span className="text-xs tracking-widest uppercase text-yellow-600/80">
-                  Welcome back
+                  New account
                 </span>
                 <div className="h-px flex-1 bg-yellow-900/40" />
               </div>
               <h2 className="font-display text-4xl font-light tracking-tight text-stone-100">
-                Sign in
+                Register
               </h2>
             </div>
 
@@ -155,7 +156,7 @@ export default function Login() {
                           onFocus={() => setFocused(name)}
                           onBlur={() => setFocused(null)}
                           required
-                          autoComplete={name === "password" ? "current-password" : "email"}
+                          autoComplete={name === "password" ? "new-password" : name}
                           className={`font-mono-custom w-full rounded-sm border px-4 py-3
                                       text-sm tracking-wide text-stone-200
                                       placeholder:text-stone-700 outline-none
@@ -165,6 +166,7 @@ export default function Login() {
                                         : "border-stone-800 bg-white/[0.02] hover:border-stone-700"
                                       }`}
                         />
+                        {/* Animated gold underline */}
                         <span
                           className="underline-gold"
                           style={{ width: active ? "100%" : "0%" }}
@@ -173,21 +175,6 @@ export default function Login() {
                     </div>
                   );
                 })}
-              </div>
-
-              {/* Forgot password */}
-              <div className="mb-6 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => navigate("/forgot-password")}
-                  className="font-mono-custom cursor-pointer border-none bg-transparent p-0
-                             text-xs tracking-wide text-stone-600
-                             underline underline-offset-2 decoration-stone-700
-                             transition-colors duration-150
-                             hover:text-yellow-500/80 hover:decoration-yellow-700"
-                >
-                  Forgot password?
-                </button>
               </div>
 
               {/* Submit */}
@@ -206,23 +193,23 @@ export default function Login() {
                     <span className="h-3 w-3 animate-spin rounded-full
                                      border border-neutral-900/40 border-t-neutral-900" />
                   )}
-                  {loading ? "Signing in…" : "Sign in"}
+                  {loading ? "Creating account…" : "Create account"}
                 </span>
               </button>
             </form>
 
-            {/* Register link */}
+            {/* Login link */}
             <p className="text-center text-xs tracking-wide text-stone-600">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <button
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/login")}
                 className="font-mono-custom cursor-pointer border-none bg-transparent p-0
                            text-xs tracking-wide text-yellow-600/80
                            underline underline-offset-2 decoration-yellow-800
                            transition-colors duration-150
                            hover:text-yellow-500 hover:decoration-yellow-500"
               >
-                Create one
+                Sign in
               </button>
             </p>
 

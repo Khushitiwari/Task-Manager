@@ -1,7 +1,7 @@
 
 import Task from "../models/task.model.js";
 
-// ✅ Create Task
+// Create Task
 export const createTask = async (req, res) => {
   try {
     const { title, description, status, dueDate } = req.body;
@@ -20,7 +20,7 @@ export const createTask = async (req, res) => {
   }
 };
 
-// ✅ Get All Tasks (for logged-in user)
+//  Get All Tasks (for logged-in user)
 export const getTasks = async (req, res) => {
   try {
     const { status } = req.query;
@@ -40,7 +40,7 @@ export const getTasks = async (req, res) => {
   }
 };
 
-// ✅ Get Single Task
+// Get Single Task
 export const getTaskById = async (req, res) => {
   try {
     const task = await Task.findOne({
@@ -58,7 +58,7 @@ export const getTaskById = async (req, res) => {
   }
 };
 
-// ✅ Update Task
+// Update Task
 export const updateTask = async (req, res) => {
   try {
     const updatedTask = await Task.findOneAndUpdate(
@@ -77,7 +77,7 @@ export const updateTask = async (req, res) => {
   }
 };
 
-// ✅ Delete Task
+// Delete Task
 export const deleteTask = async (req, res) => {
   try {
     const deletedTask = await Task.findOneAndDelete({
