@@ -101,8 +101,7 @@ export default function Register() {
               with us.
             </h1>
             <p className="max-w-xs text-xs leading-relaxed tracking-wide text-stone-500">
-              Create an account and unlock access to a carefully curated
-              experience built for those who value refinement.
+              Create an account and manage your task efficiently with in deadlines.
             </p>
           </div>
 
