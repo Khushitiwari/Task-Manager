@@ -18,7 +18,7 @@ https://task-manager-weg3.vercel.app/
 - Protected routes & secure backend APIs
 - RESTful API architecture
 - Responsive frontend UI
-- Deployment ready (Vercel / Render / Railway)
+- Deployment ready (Vercel / Render )
 
 ---
 
@@ -27,7 +27,7 @@ https://task-manager-weg3.vercel.app/
 ### Frontend
 - React.js
 - Axios
-- CSS / Tailwind (if used)
+- Tailwind CSS
 
 ### Backend
 - Node.js
